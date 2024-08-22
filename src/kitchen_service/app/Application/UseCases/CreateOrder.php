@@ -3,6 +3,7 @@
 namespace App\Application\UseCases;
 
 use App\Infrastructure\Http\Clients\InventoryClient;
+use App\Infrastructure\Http\Clients\PurchaseClient;
 use App\Domain\Repositories\OrderRepositoryInterface;
 use App\Domain\Repositories\RecipeRepositoryInterface;
 
@@ -11,15 +12,18 @@ class CreateOrder
     private $orderRepository;
     private $recipeRepository;
     private $inventoryClient;
+    private $purchaseClient;
 
     public function __construct(
         OrderRepositoryInterface $orderRepository,
         RecipeRepositoryInterface $recipeRepository,
-        InventoryClient $inventoryClient
+        InventoryClient $inventoryClient,
+        PurchaseClient $purchaseClient
     ) {
         $this->orderRepository = $orderRepository;
         $this->recipeRepository = $recipeRepository;
         $this->inventoryClient = $inventoryClient;
+        $this->purchaseClient = $purchaseClient;
     }
 
     public function execute(int $recipeId)
@@ -31,19 +35,16 @@ class CreateOrder
             return ['success' => false, 'message' => 'Recipe not found'];
         }
 
-        // Obtener los ingredientes de la receta
+        // Verificar la disponibilidad de los ingredientes
         $ingredients = $recipe['ingredients'];
 
-        // Verificar la disponibilidad de los ingredientes
-        $response = $this->inventoryClient->getIngredientsAvailable();
+        $response = $this->inventoryClient->fetchIngredientsAvailable();
 
-        // Verificar si todos los ingredientes están disponibles en la cantidad requerida
         foreach ($ingredients as $name => $quantityRequired) {
-
             $availableIngredient = collect($response)->firstWhere('name', $name);
-
             if (!$availableIngredient || $availableIngredient['quantity'] < $quantityRequired) {
-                return ['success' => false, 'message' => "Insufficient quantity for ingredient: $name"];
+                // Solicitar ingredientes al servicio de compras
+                $this->purchaseClient->orderIngredients($name, $quantityRequired - ($availableIngredient['quantity'] ?? 0));
             }
         }
 

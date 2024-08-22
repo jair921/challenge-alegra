@@ -13,7 +13,7 @@ class InventoryClient
         $this->baseUrl = config('services.warehouse.endpoint');
     }
 
-    public function getIngredientsAvailable()
+    public function fetchIngredientsAvailable()
     {
         $response = Http::get("{$this->baseUrl}/api/v1/ingredients");
 
