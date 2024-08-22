@@ -39,4 +39,8 @@ return [
         'endpoint' => env('WAREHOUSE_ENDPOINT', 'http://warehosue.test'),
     ],
 
+    'purchase' => [
+        'endpoint' => env('PURCHASE_ENDPOINT', 'http://purchase.test'),
+    ],
+
 ];

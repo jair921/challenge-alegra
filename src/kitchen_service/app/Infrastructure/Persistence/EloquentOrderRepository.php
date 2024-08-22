@@ -26,4 +26,9 @@ class EloquentOrderRepository implements OrderRepositoryInterface
     {
         $order->save();
     }
+
+    public function getPendingOrders(): array
+    {
+        return OrderModel::query()->where('status', 'in_progress')->get()->toArray();
+    }
 }
