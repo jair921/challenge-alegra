@@ -37,6 +37,7 @@ class IngredientController extends Controller
     public function order(OrderIngredientsRequest $request)
     {
         try {
+            $request->all();
             $this->orderIngredients->execute($request->all());
             $this->recordInventoryMovement->execute($request->all(), 'remove');
 
