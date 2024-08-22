@@ -35,11 +35,10 @@ return [
         ],
     ],
 
-    'orders' => [
-        'endpoint' => env('ORDERS_SERVICE_ENDPOINT', 'http://order.test'),
+    'gateway' => [
+        'endpoint' => env('GATEWAY_ENDPOINT', 'http://gateway.test'),
+        'user' => env('GATEWAY_USER'),
+        'token' => env('GATEWAY_BEARER'),
     ],
 
-    'kitchen' => [
-        'endpoint' => env('KITCHEN_SERVICE_ENDPOINT', 'http://kitchen.test'),
-    ],
 ];
