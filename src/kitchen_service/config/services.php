@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'warehouse' => [
+        'endpoint' => env('WAREHOUSE_ENDPOINT', 'http://warehosue.test'),
+    ],
+
 ];

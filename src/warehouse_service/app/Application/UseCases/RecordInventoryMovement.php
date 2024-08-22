@@ -19,7 +19,7 @@ class RecordInventoryMovement
         $this->ingredientRepository = $ingredientRepository;
     }
 
-    public function execute(array $data, string $movement): void
+    public function execute(array $data, string $movementType): void
     {
         foreach ($data['ingredients'] as $ingredientData) {
             $ingredient = $this->ingredientRepository->findByName($ingredientData['name']);
@@ -30,7 +30,7 @@ class RecordInventoryMovement
             $movement = new InventoryMovement(
                 $ingredient->getId(),
                 $ingredientData['quantity'],
-                $movement
+                $movementType
             );
 
             $this->inventoryMovementRepository->recordMovement($movement);
