@@ -35,4 +35,7 @@ return [
         ],
     ],
 
+    'orders' => [
+        'endpoint' => env('ORDERS_SERVICE_ENDPOINT', 'http://order.test'),
+    ],
 ];
