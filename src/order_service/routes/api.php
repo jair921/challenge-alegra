@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('/v1')->group(function () {
-        Route::post('/orders', [UserOrderController::class, 'create']);
-        Route::get('/orders', [UserOrderController::class, 'index']);
+    Route::post('/orders', [UserOrderController::class, 'create']);
+    Route::get('/orders', [UserOrderController::class, 'index']);
+    Route::post('/orders/{orderId}/complete', [UserOrderController::class, 'complete']);
 });

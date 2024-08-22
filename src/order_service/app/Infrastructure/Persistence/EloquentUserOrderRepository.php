@@ -28,8 +28,19 @@ class EloquentUserOrderRepository implements UserOrderRepositoryInterface
 
     public function paginateUserOrders(int $userId, int $perPage = 10)
     {
-        return UserOrderModel::where('user_id', $userId)
+        return UserOrderModel::query()->where('user_id', $userId)
             ->orderBy('created_at', 'desc')
             ->paginate($perPage);
+    }
+
+    public function findById(int $orderId)
+    {
+        return UserOrderModel::query()->find($orderId);
+    }
+
+    public function updateOrderStatus(int $orderId, string $status){
+        $order = UserOrderModel::query()->find($orderId);
+        $order->status = $status;
+        $order->save();
     }
 }

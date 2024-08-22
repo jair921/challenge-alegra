@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Domain\Repositories\OrderRepositoryInterface;
 use App\Domain\Repositories\RecipeRepositoryInterface;
 use App\Infrastructure\Http\Clients\InventoryClient;
+use App\Infrastructure\Http\Clients\OrdersClient;
 use App\Infrastructure\Http\Clients\PurchaseClient;
 use App\Models\Order;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -28,7 +29,13 @@ class ProcessOrders implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(OrderRepositoryInterface $orderRepository, RecipeRepositoryInterface $recipeRepository, InventoryClient $inventoryClient, PurchaseClient $purchaseClient): void
+    public function handle(
+        OrderRepositoryInterface $orderRepository,
+        RecipeRepositoryInterface $recipeRepository,
+        InventoryClient $inventoryClient,
+        PurchaseClient $purchaseClient,
+        OrdersClient $ordersClient
+    ): void
     {
         $orders = $orderRepository->getPendingOrders();
 
@@ -58,6 +65,8 @@ class ProcessOrders implements ShouldQueue
 
                 // Disminuir la cantidad de ingredientes en la bodega
                 $inventoryClient->updateInventory($ingredients);
+
+                $ordersClient->completeOrder($order['id']);
             }
         }
     }
