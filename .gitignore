@@ -1,3 +1,5 @@
 src/*/.env
 src/*/vendor
 src/*/composer.lock
+src/*/.editorconfig
+src/*/.rnd
