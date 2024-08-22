@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -10,5 +11,11 @@ Route::middleware('auth:api')->prefix("v1")->group(function () {
     });
 
     //Routes to microservices
+
+    // Endpoint para crear una orden
+    Route::post('/orders', [OrderController::class, 'createOrder']);
+
+    // Endpoint para listar órdenes
+    Route::get('/orders', [OrderController::class, 'listOrders']);
 
 });
