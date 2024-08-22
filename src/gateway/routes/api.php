@@ -9,6 +9,11 @@ Route::middleware('auth:api')->prefix("v1")->group(function () {
         return $request->user();
     });
 
+    //Verify token microservices
+    Route::get('/verify-token', function (Request $request) {
+        return response()->json(['message' => 'Token is valid']);
+    });
+
     //Routes to microservices
 
 });
