@@ -2,6 +2,7 @@
 
 namespace App\Infrastructure\Http\Controllers;
 
+use App\Application\UseCases\CompleteOrder;
 use App\Application\UseCases\CreateUserOrder;
 use App\Application\UseCases\ListUserOrders;
 use App\Http\Controllers\Controller;
@@ -11,11 +12,13 @@ class UserOrderController extends Controller
 {
     private $createUserOrder;
     private $listUserOrders;
+    private $completeOrder;
 
-    public function __construct(CreateUserOrder $createUserOrder, ListUserOrders $listUserOrders)
+    public function __construct(CreateUserOrder $createUserOrder, ListUserOrders $listUserOrders, CompleteOrder $completeOrder)
     {
         $this->createUserOrder = $createUserOrder;
         $this->listUserOrders = $listUserOrders;
+        $this->completeOrder = $completeOrder;
     }
 
     public function create(Request $request)
@@ -37,5 +40,16 @@ class UserOrderController extends Controller
         );
 
         return response()->json($orders);
+    }
+
+    public function complete(Request $request, $orderId)
+    {
+        $result = $this->completeOrder->execute($orderId);
+
+        if (!$result['success']) {
+            return response()->json(['message' => $result['message']], 404);
+        }
+
+        return response()->json(['message' => $result['message']], 200);
     }
 }

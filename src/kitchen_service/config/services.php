@@ -43,4 +43,8 @@ return [
         'endpoint' => env('PURCHASE_ENDPOINT', 'http://purchase.test'),
     ],
 
+    'orders' => [
+        'endpoint' => env('ORDER_ENDPOINT', 'http://order.test'),
+    ],
+
 ];
