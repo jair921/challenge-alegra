@@ -1,0 +1,133 @@
+version: '3.8'
+
+services:
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: gateway
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - orders-service
+      - kitchen-service
+      - warehouse-service
+
+  kitchen-service:
+    build:
+      context: ./kitchen_service
+      dockerfile: Dockerfile
+    container_name: kitchen-service
+    restart: unless-stopped
+    ports:
+      - "8081:80"
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=kitchen-db
+      - DB_DATABASE=kitchen
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  warehouse-service:
+    build:
+      context: ./warehouse_service
+      dockerfile: Dockerfile
+    container_name: warehouse-service
+    restart: unless-stopped
+    ports:
+      - "8082:80"
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=warehouse-db
+      - DB_DATABASE=warehouse
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  orders-service:
+    build:
+      context: ./order_service
+      dockerfile: Dockerfile
+    container_name: orders-service
+    restart: unless-stopped
+    ports:
+      - "8083:80"
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=orders-db
+      - DB_DATABASE=orders
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  purchases-service:
+    build:
+      context: ./purchase_service
+      dockerfile: Dockerfile
+    container_name: purchases-service
+    restart: unless-stopped
+    ports:
+      - "8084:80"
+    networks:
+      - app-network
+    environment:
+      - DB_HOST=purchases-db
+      - DB_DATABASE=purchases
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  kitchen-db:
+    image: mysql:8.0
+    container_name: kitchen-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: kitchen
+    ports:
+      - "3307:3306"
+    networks:
+      - app-network
+
+  warehouse-db:
+    image: mysql:8.0
+    container_name: warehouse-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: warehouse
+    ports:
+      - "3308:3306"
+    networks:
+      - app-network
+
+  orders-db:
+    image: mysql:8.0
+    container_name: orders-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: orders
+    ports:
+      - "3309:3306"
+    networks:
+      - app-network
+
+  purchases-db:
+    image: mysql:8.0
+    container_name: purchases-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: purchases
+    ports:
+      - "3310:3306"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

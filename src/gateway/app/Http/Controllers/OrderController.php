@@ -17,7 +17,7 @@ class OrderController extends Controller
     public function createOrder(Request $request)
     {
         // Forward la solicitud al servicio de órdenes
-        $response = Http::post("{$this->ordersServiceUrl}/api/orders", $request->all());
+        $response = Http::post("{$this->ordersServiceUrl}/api/v1/orders", $request->all());
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
@@ -26,7 +26,7 @@ class OrderController extends Controller
     public function listOrders()
     {
         // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->ordersServiceUrl}/api/orders");
+        $response = Http::get("{$this->ordersServiceUrl}/api/v1/orders");
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
