@@ -59,4 +59,11 @@ class EloquentPurchaseRepository implements PurchaseRepositoryInterface
             $purchase->save();
         }
     }
+
+    public function paginatePurchases(int $perPage = 10)
+    {
+        return PurchaseModel::query()
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
+    }
 }

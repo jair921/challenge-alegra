@@ -15,4 +15,6 @@ interface PurchaseRepositoryInterface
     public function updatePurchaseStatus(int $id, string $status): void;
 
     public function updatePurchaseQuantity(int $id, int $quantity): void;
+
+    public function paginatePurchases(int $perPage = 10);
 }

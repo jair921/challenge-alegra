@@ -23,10 +23,10 @@
                     <a class="nav-link" href="{{route('warehouse.ingredients')}}">Ingredientes</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Compras Plaza</a>
+                    <a class="nav-link" href="{{route('warehouse.purchases')}}">Compras Plaza</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Recetas</a>
+                    <a class="nav-link" href="{{route('recipes.index')}}">Recetas</a>
                 </li>
             </ul>
         </div>
