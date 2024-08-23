@@ -5,49 +5,29 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class KitchenController extends Controller
+class WareHouseController extends Controller
 {
-    protected $kitchenService;
 
     public function __construct()
     {
-        $this->kitchenService = config('services.kitchen.endpoint');
+        $this->ordersServiceUrl = config('services.warehouse.endpoint');
+        $this->purchaseServiceUrl = config('services.purchase.endpoint');
     }
 
-    public function ramdon(Request $request)
+    public function ingredients()
     {
-        // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->kitchenService}/api/v1/recipes/random");
+        $response = Http::get("{$this->ordersServiceUrl}/api/v1/ingredients");
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
     }
 
-    public function recipes(Request $request)
+    public function purchases(Request $request)
     {
-        // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->kitchenService}/api/v1/recipes");
+        $page = $request->has('page') ? $request->page : 1;
+        $response = Http::get("{$this->purchaseServiceUrl}/api/v1/purchases", ['page' => $page]);
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
     }
-
-    public function recipe(Request $request, $recipe)
-    {
-        // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->kitchenService}/api/v1/recipes/{$recipe}");
-
-        // Retornar la respuesta del servicio de órdenes al cliente
-        return response()->json($response->json(), $response->status());
-    }
-
-    public function order(Request $request, $order)
-    {
-        // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->kitchenService}/api/v1/orders/{$order}");
-
-        // Retornar la respuesta del servicio de órdenes al cliente
-        return response()->json($response->json(), $response->status());
-    }
-
 }
