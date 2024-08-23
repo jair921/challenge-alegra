@@ -4,8 +4,11 @@ namespace App\Helpers;
 
 class Helpers
 {
-    public static function replacePaginationUrls(array $paginationData, string $newBaseUrl): array
+    public static function replacePaginationUrls($paginationData, $newBaseUrl)
     {
+        if(!$paginationData || !is_array($paginationData)){
+            return $paginationData;
+        }
         // Reemplazar las URLs principales
         $paginationData['first_page_url'] = Helpers::replaceBaseUrl($paginationData['first_page_url'], $newBaseUrl);
         $paginationData['last_page_url'] = Helpers::replaceBaseUrl($paginationData['last_page_url'], $newBaseUrl);
