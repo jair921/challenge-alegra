@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Clients\GatewayClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class WarehouseController extends Controller
 {
-    public function ingredients()
+    public function ingredients(GatewayClient $gatewayClient)
     {
-        $response = Http::get('http://warehouse.test/api/v1/ingredients');
-        $ingredients = $response->json();
+        $ingredients = $gatewayClient->fetchIngredients();
 
         return view('warehouse.ingredients', compact('ingredients'));
     }
 
-    public function purchases()
+    public function purchases(GatewayClient $gatewayClient)
     {
-        $response = Http::get('http://purchase.test/api/v1/purchases');
-        $purchases = $response->json();
+        $purchases = $gatewayClient->fetchPurchases();
 
         return view('warehouse.purchases', compact('purchases'));
     }

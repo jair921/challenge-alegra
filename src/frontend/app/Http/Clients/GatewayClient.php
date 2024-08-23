@@ -45,4 +45,28 @@ class GatewayClient
 
         return $response->json();
     }
+
+    public function fetchIngredients()
+    {
+        $response = Http::withToken($this->token)
+            ->get("{$this->baseUrl}/api/v1/warehouse/ingredients");
+
+        return $response->json();
+    }
+
+    public function fetchPurchases()
+    {
+        $response = Http::withToken($this->token)
+            ->get("{$this->baseUrl}/api/v1/purchases");
+
+        return $response->json();
+    }
+
+    public function fetchRecipes()
+    {
+        $response = Http::withToken($this->token)
+            ->get("{$this->baseUrl}/api/v1/kitchen/recipes");
+
+        return $response->json();
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\UseCases\CreatePurchase;
 use App\Application\UseCases\GetPurchaseById;
+use App\Application\UseCases\ListPurchases;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -11,11 +12,24 @@ class PurchaseController extends Controller
 {
     private $createPurchase;
     private $getPurchaseById;
+    private $listPurchases;
 
-    public function __construct(CreatePurchase $createPurchase, GetPurchaseById $getPurchaseById)
+    public function __construct(
+        CreatePurchase $createPurchase,
+        GetPurchaseById $getPurchaseById,
+        ListPurchases $listPurchases
+    )
     {
         $this->createPurchase = $createPurchase;
         $this->getPurchaseById = $getPurchaseById;
+        $this->listPurchases = $listPurchases;
+    }
+
+    public function index(Request $request)
+    {
+        $purchases = $this->listPurchases->execute();
+
+        return response()->json($purchases);
     }
 
     public function store(Request $request)
@@ -35,4 +49,5 @@ class PurchaseController extends Controller
 
         return response()->json($purchase->toArray());
     }
+
 }

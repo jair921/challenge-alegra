@@ -24,7 +24,10 @@ Route::middleware('auth:api')->prefix("v1")->group(function () {
     Route::get('/orders', [OrderController::class, 'listOrders']);
 
     Route::get('/kitchen/ramdom', [KitchenController::class, 'ramdon']);
+    Route::get('/kitchen/recipes', [KitchenController::class, 'recipes']);
 
     Route::get('/warehouse/ingredients', [WareHouseController::class, 'ingredients']);
+
+    Route::get('/purchases', [WareHouseController::class, 'purchases']);
 
 });

@@ -8,10 +8,9 @@ use Illuminate\Support\Facades\Http;
 
 class RecipeController extends Controller
 {
-    public function index()
+    public function index(GatewayClient $gatewayClient)
     {
-        $response = Http::get('http://kitchen-service/api/v1/recipes');
-        $recipes = $response->json();
+        $recipes = $gatewayClient->fetchRecipes();
 
         return view('recipes.index', compact('recipes'));
     }

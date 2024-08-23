@@ -18,7 +18,7 @@
                 <th>Orden ID</th>
                 <th>Estado</th>
                 <th>Fecha Solicitud</th>
-                <th>Fecha Actualziación</th>
+                <th>Fecha Actualización</th>
             </tr>
             </thead>
             <tbody>
