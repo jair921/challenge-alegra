@@ -51,4 +51,3 @@ class KitchenController extends Controller
     }
 
 }
-
