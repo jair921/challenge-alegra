@@ -15,18 +15,16 @@
         <table class="table table-bordered">
             <thead>
             <tr>
-                <th>Order ID</th>
-                <th>User ID</th>
-                <th>Status</th>
-                <th>Created At</th>
-                <th>Updated At</th>
+                <th>Orden ID</th>
+                <th>Estado</th>
+                <th>Fecha Solicitud</th>
+                <th>Fecha Actualziación</th>
             </tr>
             </thead>
             <tbody>
             @foreach ($orders['data'] as $order)
                 <tr>
                     <td>{{ $order['order_id'] }}</td>
-                    <td>{{ $order['user_id'] }}</td>
                     <td>{{ $order['status'] }}</td>
                     <td>{{ $order['created_at'] }}</td>
                     <td>{{ $order['updated_at'] }}</td>
