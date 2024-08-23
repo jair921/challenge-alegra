@@ -15,7 +15,7 @@ class OrdersClient
 
     public function completeOrder(int $orderId)
     {
-        $response = Http::post("{$this->baseUrl}/api/orders/{$orderId}/complete");
+        $response = Http::post("{$this->baseUrl}/api/v1/orders/{$orderId}/complete");
 
         return $response->json();
     }

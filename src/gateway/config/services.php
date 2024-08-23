@@ -42,4 +42,12 @@ return [
     'kitchen' => [
         'endpoint' => env('KITCHEN_SERVICE_ENDPOINT', 'http://kitchen.test'),
     ],
+
+    'warehouse' => [
+        'endpoint' => env('WAREHOUSE_SERVICE_ENDPOINT', 'http://warehouse.test'),
+    ],
+
+    'purchase' => [
+        'endpoint' => env('PURCHASE_SERVICE_ENDPOINT', 'http://warehouse.test'),
+    ],
 ];
