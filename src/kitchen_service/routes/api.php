@@ -14,6 +14,7 @@ Route::prefix('v1')->group(function () {
 
     Route::prefix('orders')->group(function () {
         Route::post('/', [OrderController::class, 'createOrder']);
+        Route::get('/{order}', [OrderController::class, 'show']);
         Route::post('/{order}/prepare', [OrderController::class, 'prepareOrder']);
     });
 });

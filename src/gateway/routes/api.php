@@ -25,6 +25,8 @@ Route::middleware('auth:api')->prefix("v1")->group(function () {
 
     Route::get('/kitchen/ramdom', [KitchenController::class, 'ramdon']);
     Route::get('/kitchen/recipes', [KitchenController::class, 'recipes']);
+    Route::get('/kitchen/recipes/{recipe}', [KitchenController::class, 'recipe']);
+    Route::get('/kitchen/orders/{order}', [KitchenController::class, 'order']);
 
     Route::get('/warehouse/ingredients', [WareHouseController::class, 'ingredients']);
 

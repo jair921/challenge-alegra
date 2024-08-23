@@ -23,10 +23,11 @@ class OrderController extends Controller
         return response()->json($response->json(), $response->status());
     }
 
-    public function listOrders()
+    public function listOrders(Request $request)
     {
+        $page = $request->has('page') ? $request->page : 1;
         // Forward la solicitud al servicio de órdenes
-        $response = Http::get("{$this->ordersServiceUrl}/api/v1/orders");
+        $response = Http::get("{$this->ordersServiceUrl}/api/v1/orders", ['page' => $page]);
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());

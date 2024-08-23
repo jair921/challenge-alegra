@@ -5,28 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class WareHouseController extends Controller
+class KitchenController extends Controller
 {
+    protected $kitchenService;
 
     public function __construct()
     {
-        $this->ordersServiceUrl = config('services.warehouse.endpoint');
-        $this->purchaseServiceUrl = config('services.purchase.endpoint');
+        $this->kitchenService = config('services.kitchen.endpoint');
     }
 
-    public function ingredients()
+    public function ramdon(Request $request)
     {
-        $response = Http::get("{$this->ordersServiceUrl}/api/v1/ingredients");
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/recipes/random");
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
     }
 
-    public function purchases()
+    public function recipes(Request $request)
     {
-        $response = Http::get("{$this->purchaseServiceUrl}/api/v1/purchases");
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/recipes");
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
     }
+
+    public function recipe(Request $request, $recipe)
+    {
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/recipes/{$recipe}");
+
+        // Retornar la respuesta del servicio de órdenes al cliente
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function order(Request $request, $order)
+    {
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/orders/{$order}");
+
+        // Retornar la respuesta del servicio de órdenes al cliente
+        return response()->json($response->json(), $response->status());
+    }
+
 }
