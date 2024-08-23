@@ -16,6 +16,7 @@
             <thead>
             <tr>
                 <th>Orden ID</th>
+                <th>Receta/Plato</th>
                 <th>Estado</th>
                 <th>Fecha Solicitud</th>
                 <th>Fecha Actualización</th>
@@ -25,6 +26,7 @@
             @foreach ($orders['data'] as $order)
                 <tr>
                     <td>{{ $order['order_id'] }}</td>
+                    <td>{{ $order['recipe'] }}</td>
                     <td>{{ $order['status'] }}</td>
                     <td>{{ $order['created_at'] }}</td>
                     <td>{{ $order['updated_at'] }}</td>
@@ -35,25 +37,17 @@
 
         <nav>
             <ul class="pagination">
-                <li class="page-item {{ is_null($orders['prev_page_url']) ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ $orders['prev_page_url'] }}" aria-label="Previous">
-                        <span aria-hidden="true">&laquo; Previous</span>
-                    </a>
-                </li>
+
 
                 @foreach ($orders['links'] as $link)
                     @if ($link['url'])
                         <li class="page-item {{ $link['active'] ? 'active' : '' }}">
-                            <a class="page-link" href="{{ $link['url'] }}">{{ $link['label'] }}</a>
+                            <a class="page-link" href="{{ $link['url'] }}">{!!   $link['label'] !!}</a>
                         </li>
                     @endif
                 @endforeach
 
-                <li class="page-item {{ is_null($orders['next_page_url']) ? 'disabled' : '' }}">
-                    <a class="page-link" href="{{ $orders['next_page_url'] }}" aria-label="Next">
-                        <span aria-hidden="true">Next &raquo;</span>
-                    </a>
-                </li>
+
             </ul>
         </nav>
 

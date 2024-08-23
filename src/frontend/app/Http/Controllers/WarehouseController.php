@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Helpers;
 use App\Http\Clients\GatewayClient;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -15,9 +16,12 @@ class WarehouseController extends Controller
         return view('warehouse.ingredients', compact('ingredients'));
     }
 
-    public function purchases(GatewayClient $gatewayClient)
+    public function purchases(Request $request, GatewayClient $gatewayClient)
     {
-        $purchases = $gatewayClient->fetchPurchases();
+        $page = $request->has('page') ? $request->page : 1;
+        $purchases = $gatewayClient->fetchPurchases($page);
+
+        $purchases = Helpers::replacePaginationUrls($purchases, route('warehouse.purchases'));
 
         return view('warehouse.purchases', compact('purchases'));
     }

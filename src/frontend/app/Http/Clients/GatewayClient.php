@@ -21,10 +21,10 @@ class GatewayClient
     /**
      * @throws ConnectionException
      */
-    public function fetchOrders()
+    public function fetchOrders($page)
     {
         $response = Http::withToken($this->token)
-            ->get("{$this->baseUrl}/api/v1/orders");
+            ->get("{$this->baseUrl}/api/v1/orders", ['page' => $page]);
         return $response->json();
     }
 
@@ -46,6 +46,14 @@ class GatewayClient
         return $response->json();
     }
 
+    public function fetchRecipe($recipe)
+    {
+        $response = Http::withToken($this->token)
+            ->get("{$this->baseUrl}/api/v1/kitchen/recipes/{$recipe}");
+
+        return $response->json();
+    }
+
     public function fetchIngredients()
     {
         $response = Http::withToken($this->token)
@@ -54,10 +62,10 @@ class GatewayClient
         return $response->json();
     }
 
-    public function fetchPurchases()
+    public function fetchPurchases($page)
     {
         $response = Http::withToken($this->token)
-            ->get("{$this->baseUrl}/api/v1/purchases");
+            ->get("{$this->baseUrl}/api/v1/purchases", ['page' => $page]);
 
         return $response->json();
     }
@@ -67,6 +75,13 @@ class GatewayClient
         $response = Http::withToken($this->token)
             ->get("{$this->baseUrl}/api/v1/kitchen/recipes");
 
+        return $response->json();
+    }
+
+    public function fetchOrderKitchen($order)
+    {
+        $response = Http::withToken($this->token)
+            ->get("{$this->baseUrl}/api/v1/kitchen/orders/{$order}");
         return $response->json();
     }
 }

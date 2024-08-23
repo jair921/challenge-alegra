@@ -32,4 +32,22 @@ class KitchenController extends Controller
         return response()->json($response->json(), $response->status());
     }
 
+    public function recipe(Request $request, $recipe)
+    {
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/recipes/{$recipe}");
+
+        // Retornar la respuesta del servicio de órdenes al cliente
+        return response()->json($response->json(), $response->status());
+    }
+
+    public function order(Request $request, $order)
+    {
+        // Forward la solicitud al servicio de órdenes
+        $response = Http::get("{$this->kitchenService}/api/v1/orders/{$order}");
+
+        // Retornar la respuesta del servicio de órdenes al cliente
+        return response()->json($response->json(), $response->status());
+    }
+
 }

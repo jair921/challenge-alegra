@@ -22,9 +22,10 @@ class WareHouseController extends Controller
         return response()->json($response->json(), $response->status());
     }
 
-    public function purchases()
+    public function purchases(Request $request)
     {
-        $response = Http::get("{$this->purchaseServiceUrl}/api/v1/purchases");
+        $page = $request->has('page') ? $request->page : 1;
+        $response = Http::get("{$this->purchaseServiceUrl}/api/v1/purchases", ['page' => $page]);
 
         // Retornar la respuesta del servicio de órdenes al cliente
         return response()->json($response->json(), $response->status());
