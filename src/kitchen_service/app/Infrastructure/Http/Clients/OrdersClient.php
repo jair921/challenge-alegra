@@ -13,7 +13,7 @@ class OrdersClient
         $this->baseUrl = config('services.orders.endpoint'); // Configura el endpoint en config/services.php
     }
 
-    public function completeOrder(int $orderId): array
+    public function completeOrder(int $orderId)
     {
         $response = Http::post("{$this->baseUrl}/api/orders/{$orderId}/complete");
 
