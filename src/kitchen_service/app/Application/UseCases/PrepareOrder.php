@@ -17,7 +17,7 @@ class PrepareOrder
     public function execute(Order $order)
     {
         // Marcar la orden como preparada
-        $order->status = 'prepared';
+        $order->status = 'completed';
         $this->orderRepository->updateOrder($order);
 
         return $order;
