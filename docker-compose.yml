@@ -128,6 +128,58 @@ services:
     networks:
       - app-network
 
+  kitchen_scheduler:
+    build:
+      context: ./kitchen
+      dockerfile: Dockerfile
+    container_name: kitchen_scheduler
+    volumes:
+      - ./kitchen:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - app-network
+    command: php artisan schedule:run
+
+  purchase_scheduler:
+      build:
+        context: ./purchase
+        dockerfile: Dockerfile
+      container_name: purchase_scheduler
+      volumes:
+        - ./purchase:/var/www/html
+      env_file:
+        - .env
+      networks:
+        - app-network
+      command: php artisan schedule:run
+
+  kitchen_queue:
+      build:
+        context: ./kitchen
+        dockerfile: Dockerfile
+      container_name: kitchen_queue
+      volumes:
+        - ./kitchen:/var/www/html
+      env_file:
+        - .env
+      networks:
+        - app-network
+      command: php artisan queue:work --sleep=3 --tries=3
+
+  purchase_queue:
+      build:
+        context: ./purchase
+        dockerfile: Dockerfile
+      container_name: purchase_queue
+      volumes:
+        - ./purchase:/var/www/html
+      env_file:
+        - .env
+      networks:
+        - app-network
+      command: php artisan queue:work --sleep=3 --tries=3
+
 networks:
   app-network:
     driver: bridge
